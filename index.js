@@ -20,7 +20,6 @@ io.on('connection', (socket) => {
     })
 
 });
-// client means connected device like chrome  , firefox
 
 app.use('/', express.static(__dirname + '/public')); // Serve static files
 
@@ -29,3 +28,20 @@ server.listen(3000, () => {
     console.log("Server is up on port 3000...");
 });
 
+
+
+
+
+
+
+// client means connected device like chrome  , firefox
+/**
+ * Like in my local machine on 3000 run the chat application 
+ * on my local machine we have chrome , firefox and mozila okay
+ * if this browser hit the 3000 so it connect with my server and all this is client of this server
+ * io.on("connection", socket => {
+ *  console.log("connect new user");
+ * });
+ * when the new user is hit the 3000 , this is.on function is execute
+ * 
+ */

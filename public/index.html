@@ -1,125 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Application</title>
+    <title>Simple Chat Application</title>
     <style>
-        /* @codewithcurious.com */
-
-        /* Global Styles */
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
 
-        header {
-            background-color: #007bff;
-            color: #fff;
-            padding: 20px;
-        }
-
-        .container {
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: #28282b;
         }
 
-        /* Chat Window Styles */
-        .chat-window {
-            width: 500px;
-            background-color: #f0f0f0;
-            border-radius: 8px;
+        .chat-container {
+            width: 400px;
+            background-color: white;
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .chat-area {
+        .chat-header {
+            background-color: #c99915;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .chat-body {
             height: 400px;
-            overflow-y: scroll;
             padding: 20px;
+            overflow-y: auto;
+            background-color: #e9ecef;
         }
 
-        .chat-messages {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .message {
+        .chat-message {
             margin-bottom: 10px;
-            background-color: #fff;
+        }
+
+        .chat-message .sender {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .chat-message.sent {
+            text-align: right;
+        }
+
+        .chat-message.received .message {
+            background-color: #f1f1f1;
+            color: #333;
             padding: 10px;
-            border-radius: 4px;
+            border-radius: 10px;
+            display: inline-block;
+            max-width: 80%;
         }
 
-        .user-input {
+        .chat-message.sent .message {
+            background-color: #c99915;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+            max-width: 80%;
+        }
+
+        .chat-footer {
             display: flex;
-            align-items: center;
-            padding: 20px;
-            background-color: #fff;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
         }
 
-        #message-input {
-            flex-grow: 1;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        .chat-footer input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
-        #send-button {
-            padding: 8px 16px;
-            margin-left: 10px;
-            background-color: #007bff;
+        .chat-footer button {
+            background-color: #c99915;
+            color: white;
             border: none;
-            border-radius: 4px;
-            color: #fff;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
             cursor: pointer;
         }
 
-        #send-button:hover {
-            background-color: #0056b3;
+        .chat-footer button:hover {
+            background-color: #c99915;
         }
+
     </style>
 </head>
-
 <body>
-    <div>
-        <header>
-            <h1>Real-Time Chat Application</h1>
-        </header>
-        <div class="container">
-            <div class="chat-window">
-                <div class="chat-area">
-                    <div class="chat-messages">
-                        <input type="text" id="msgOne">
-                        <ul id="msgList">
 
-                        </ul>
-                    </div>
-                </div>
-                <div class="user-input">
-                    <button id="send-button">Send</button>
-                </div>
+    <div class="chat-container">
+        <div class="chat-header">
+            Chat Application
+        </div>
+
+        <div class="chat-body">
+            <div class="chat-message received">
+                <div class="sender">User A</div>
+                <div class="message">Hello, how are you?</div>
             </div>
+            <div class="chat-message sent">
+                <div class="sender">You</div>
+                <div class="message">I'm good, thanks! What about you?</div>
+            </div>
+        </div>
 
-
-            <!-- <div class="chat-window" style="margin-left: 1rem;">
-                <div class="chat-area">
-                    <div class="chat-messages">
-                        <input type="text" id="new-two">
-                    </div>
-                </div>
-                <div class="user-input">
-                    <button id="send-button">Send</button>
-                </div>
-            </div> -->
+        <div class="chat-footer">
+            <input type="text" placeholder="Type a message...">
+            <button>Send</button>
         </div>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
 </body>
-
 </html>
