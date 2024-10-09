@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,12 +103,13 @@
         .chat-footer button:hover {
             background-color: #c99915;
         }
-
     </style>
 </head>
+
 <body>
 
     <div class="chat-container">
+        <input style="text-align: center; cursor: pointer;" type="hidden" id="start-chat" data-roomid="<%= id %>" />
         <div class="chat-header">
             Chat Application
         </div>
@@ -119,17 +121,56 @@
             </div>
             <div class="chat-message sent">
                 <div class="sender">You</div>
-                <div class="message">I'm good, thanks! What about you?</div>
+                <div class="message" id="msgList">
+                    <%=console.log("chats")%>
+                    <table>
+                        <% for(var i=0; i < chats.length; i++) { %>
+                            <li><%= chats[i].content %></li>
+                        <% } %>
+                    </table>
+                </div>
             </div>
         </div>
 
         <div class="chat-footer">
-            <input type="text" placeholder="Type a message...">
-            <button>Send</button>
+            <input type="text" id="textBar" placeholder="Type a message...">
+            <button id="send_button">Send</button>
         </div>
     </div>
-  
+
     <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
+    <script>
+        var socket = io();
+
+        let btn = document.getElementById('send_button');
+        let textBar = document.getElementById('textBar');
+        let msgList = document.getElementById('msgList');
+
+        btn.onclick = function exec() {
+            socket.emit("send_msg", {
+                msg: textBar.value,
+                userName: "Prince",
+                roomid: startChat.getAttribute('data-roomid')
+            })
+            textBar.value = "";
+        }
+
+        // whenever we any device is connected it associated with the room id
+        let startChat = document.getElementById('start-chat');
+        console.log("id", startChat.getAttribute('data-roomid'))
+        socket.emit("join_room", {
+            roomid: startChat.getAttribute('data-roomid')
+        })
+
+
+        socket.on("receive_msg", (data) => {
+            console.log("msg_receive", data);
+            let liMsg = document.createElement('li');
+            liMsg.innerText = `${data.userName}: ${data.msg}`;
+            msgList.appendChild(liMsg);
+        })
+
+    </script>
 </body>
+
 </html>
