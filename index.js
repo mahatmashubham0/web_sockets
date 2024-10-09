@@ -12,17 +12,15 @@ const io = socketio(server);
 io.on('connection', (socket) => {
     console.log("Connection is up ..." + socket.id);
 
-    socket.on('from_client', () => {
-        console.log("Event Done from client");
+    socket.on("send_msg", (data)=>{
+        console.log("data", data);    
+        io.emit("receive_msg" , data); // broadcast the msg to all connected clients
+        // socket.emit("receive_msg" , data); // send the msg to the client only that initiated the event
+        // socket.broadcast.emit("receive_msg" , data); // Broadcast the msg to all client except the sender
     })
 
-    // it executes
-    setInterval(() => {
-        socket.emit("from_server");
-    } , 2000);
-
 });
-
+// client means connected device like chrome  , firefox
 
 app.use('/', express.static(__dirname + '/public')); // Serve static files
 
