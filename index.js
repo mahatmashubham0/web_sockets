@@ -1,11 +1,11 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
+const connect = require('./config/database');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-
 
 
 // Handle socket.io connections
@@ -24,10 +24,11 @@ io.on('connection', (socket) => {
 app.use('/', express.static(__dirname + '/public')); // Serve static files
 
 // Start server
-server.listen(3000, () => {
+server.listen(3000, async () => {
     console.log("Server is up on port 3000...");
+    await connect();
+    console.log("Database connection is done ...")
 });
-
 
 
 
@@ -43,5 +44,9 @@ server.listen(3000, () => {
  *  console.log("connect new user");
  * });
  * when the new user is hit the 3000 , this is.on function is execute
+ * 
+ */
+
+/**  Rooms
  * 
  */
